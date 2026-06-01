@@ -1,0 +1,50 @@
+package com.askmydoc.backend.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "chat_messages")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ChatMessage {
+
+    public enum Role { USER, ASSISTANT }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "session_id", nullable = false)
+    private ChatSession session;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
+
+    @Column(name = "question", columnDefinition = "TEXT")
+    private String question;
+
+    @Column(name = "rag_answer", columnDefinition = "TEXT")
+    private String ragAnswer;
+
+    @Column(name = "llm_answer", columnDefinition = "TEXT")
+    private String llmAnswer;
+
+    @Column(name = "llm_provider_used", length = 100)
+    private String llmProviderUsed;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+}
