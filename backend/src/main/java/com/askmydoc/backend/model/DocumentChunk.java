@@ -21,7 +21,7 @@ public class DocumentChunk {
     private Document document;
 
     @Column(name = "chunk_index", nullable = false)
-    private Integer chunkIndex;
+    private int chunkIndex;
 
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;

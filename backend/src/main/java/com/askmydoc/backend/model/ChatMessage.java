@@ -14,19 +14,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ChatMessage {
 
-    public enum Role { USER, ASSISTANT }
+    public enum MessageRole { USER, ASSISTANT }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "session_id", nullable = false)
-    private ChatSession session;
+    @JoinColumn(name = "chat_id", nullable = false)
+    private Chat chat;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private Role role;
+    @Column(name = "role", nullable = false, length = 20)
+    private MessageRole role;
 
     @Column(name = "question", columnDefinition = "TEXT")
     private String question;

@@ -1,19 +1,19 @@
 package com.askmydoc.backend.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "chat_sessions")
+@Table(name = "chats")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatSession {
+public class Chat {
+
+    public enum DocumentStatus { PENDING, PROCESSING, READY, FAILED }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,17 +23,24 @@ public class ChatSession {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "document_id", nullable = false)
-    private Document document;
-
     @Column(name = "title", length = 255)
     private String title;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "document_status", nullable = false, length = 20)
+    private DocumentStatus documentStatus = DocumentStatus.PENDING;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToOne(mappedBy = "chat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Document document;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ChatMessage> messages;
 
     @PrePersist
