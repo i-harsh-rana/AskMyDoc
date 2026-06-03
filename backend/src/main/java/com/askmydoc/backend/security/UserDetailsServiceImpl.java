@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .builder()
                 .username(appUser.getEmail())
                 .password(appUser.getPassword())
-                .authorities(new SimpleGrantedAuthority("ROLE_" + appUser.getRole().name()))
+                .authorities(new SimpleGrantedAuthority(appUser.getRole().name()))
                 .build();
     }
 }
