@@ -46,5 +46,8 @@ public class Chat {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
+        if (this.documentStatus == null) {
+            this.documentStatus = DocumentStatus.PENDING;
+        }
     }
 }
