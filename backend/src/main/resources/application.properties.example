@@ -14,4 +14,7 @@ spring.jpa.properties.hibernate,format_sql=true
 # JWT
 jwt.secret=
 
+#Encryption
+encryption.secret-key=
+
 server.port=8080

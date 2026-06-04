@@ -15,5 +15,6 @@ public class LlmDto {
     private String displayName;
     private String baseUrl;
     private Boolean isActive;
+    private String bearerToken;
 
 }

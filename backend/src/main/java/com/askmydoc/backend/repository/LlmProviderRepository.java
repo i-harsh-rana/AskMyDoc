@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface LlmProviderRepository extends JpaRepository<LlmProvider, Long> {
 
-    List<LlmProvider> findLlmByUserId(Long userId);
+    List<LlmProvider> findByUserId(Long userId);
 
-    List<LlmProvider> findActiveLlmByUserId(Long userId);
+    List<LlmProvider> findByUserIdAndIsActiveTrue(Long userId);
 
     Optional<LlmProvider> findByIdAndUserId(Long id, Long userId);
 
