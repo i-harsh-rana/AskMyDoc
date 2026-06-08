@@ -1,8 +1,9 @@
 package com.askmydoc.backend.utils;
 
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,22 +11,32 @@ import java.util.List;
 @Component
 public class TextChunker {
 
-    private static final int chunkSize = 500;
-    private static final int overlap = 50;
+    @Value("${chunker.chunk-size}")
+    private int chunkSize;
 
-    public List<String> chunk(String text){
-        String[] words = text.split("\\s+");
-        List<String> ans = new ArrayList<>();
+    @Value("${chunker.overlap}")
+    private int overlap;
 
-        int start = 0;
+    public List<String> chunk(String text) {
+        if (text == null || text.isBlank()) return new ArrayList<>();
 
-        while(start< words.length){
-            int end = Math.min(start+chunkSize, words.length);
-            ans.add(String.join(" ", Arrays.copyOfRange(words, start, end)));
-            if(end== words.length) break;
-            start += (chunkSize-overlap);
+        String[] words = clean(text).split(" ");
+        int step = Math.max(1, chunkSize - overlap);
+
+        List<String> chunks = new ArrayList<>();
+        for (int start = 0; start < words.length; start += step) {
+            int end = Math.min(start + chunkSize, words.length);
+            chunks.add(String.join(" ", Arrays.copyOfRange(words, start, end)));
+            if (end == words.length) break;
         }
 
-        return ans;
+        return chunks;
+    }
+
+    private String clean(String text) {
+        return Normalizer.normalize(text, Normalizer.Form.NFKC)
+                .replaceAll("\\p{Cntrl}", " ")
+                .replaceAll("\\s+", " ")
+                .trim();
     }
 }

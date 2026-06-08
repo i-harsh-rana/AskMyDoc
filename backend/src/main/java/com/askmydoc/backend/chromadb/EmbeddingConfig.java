@@ -5,6 +5,7 @@ import org.springframework.ai.chroma.vectorstore.ChromaVectorStore;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.transformers.TransformersEmbeddingModel;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.JdkClientHttpRequestFactory;
@@ -15,16 +16,18 @@ import java.net.http.HttpClient;
 @Configuration
 public class EmbeddingConfig {
 
-    private static final String COLLECTION_NAME = "rag_chunks";
-    private static final String CHROMA_URL = "http://localhost:8000";
-    private static final String TENANT = "default_tenant";
-    private static final String DATABASE = "default_database";
+    @Value("${chroma.url}")
+    private String chromaUrl;
+    @Value("${chroma.collection-name}")
+    private String collectionName;
+    @Value("${chroma.tenant}")
+    private String tenant;
+    @Value("${chroma.database}")
+    private String database;
 
     @Bean
-    public EmbeddingModel embeddingModel() throws Exception {
-        TransformersEmbeddingModel model = new TransformersEmbeddingModel();
-        model.afterPropertiesSet();
-        return model;
+    public EmbeddingModel embeddingModel() {
+        return new TransformersEmbeddingModel();
     }
 
     @Bean
@@ -36,24 +39,18 @@ public class EmbeddingConfig {
                 .requestFactory(new JdkClientHttpRequestFactory(httpClient));
 
         return ChromaApi.builder()
-                .baseUrl(CHROMA_URL)
+                .baseUrl(chromaUrl)
                 .restClientBuilder(restClientBuilder)
                 .build();
     }
 
     @Bean
     public VectorStore vectorStore(ChromaApi chromaApi, EmbeddingModel embeddingModel) {
-        try {
-            chromaApi.getCollection(TENANT, DATABASE, COLLECTION_NAME);
-        } catch (Exception e) {
-            chromaApi.createCollection(TENANT, DATABASE, new ChromaApi.CreateCollectionRequest(COLLECTION_NAME));
-        }
-
         return ChromaVectorStore.builder(chromaApi, embeddingModel)
-                .tenantName(TENANT)
-                .databaseName(DATABASE)
-                .collectionName(COLLECTION_NAME)
-                .initializeSchema(false)
+                .tenantName(tenant)
+                .databaseName(database)
+                .collectionName(collectionName)
+                .initializeSchema(true)
                 .build();
     }
 }
