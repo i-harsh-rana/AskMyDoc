@@ -14,5 +14,7 @@ public interface DocumentChunkRepository extends JpaRepository<DocumentChunk, Lo
 
     Optional<DocumentChunk> findByChromaVectorId(String chromaVectorId);
 
+    List<DocumentChunk> findByChromaVectorIdIn(List<String> chromaVectorIds);
+
     void deleteByDocumentId(Long documentId);
 }
