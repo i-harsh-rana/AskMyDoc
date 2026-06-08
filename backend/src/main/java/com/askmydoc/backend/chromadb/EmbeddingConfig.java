@@ -1,4 +1,4 @@
-package com.askmydoc.backend.config;
+package com.askmydoc.backend.chromadb;
 
 import org.springframework.ai.chroma.vectorstore.ChromaApi;
 import org.springframework.ai.chroma.vectorstore.ChromaVectorStore;
