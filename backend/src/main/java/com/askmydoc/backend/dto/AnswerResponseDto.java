@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnswerResponseDto {
-    private String ragAnswer;
-    private String llmAnswer;
+    private String answer;
     private String llmProviderUsed;
 }

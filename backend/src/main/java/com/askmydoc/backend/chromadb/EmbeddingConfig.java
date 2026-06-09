@@ -12,6 +12,7 @@ import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 
 import java.net.http.HttpClient;
+import java.util.Map;
 
 @Configuration
 public class EmbeddingConfig {
@@ -46,6 +47,13 @@ public class EmbeddingConfig {
 
     @Bean
     public VectorStore vectorStore(ChromaApi chromaApi, EmbeddingModel embeddingModel) {
+        boolean exists = chromaApi.listCollections(tenant, database).stream()
+                .anyMatch(c -> collectionName.equals(c.name()));
+        if (!exists) {
+            chromaApi.createCollection(tenant, database,
+                    new ChromaApi.CreateCollectionRequest(collectionName, Map.of("hnsw:space", "cosine")));
+        }
+
         return ChromaVectorStore.builder(chromaApi, embeddingModel)
                 .tenantName(tenant)
                 .databaseName(database)

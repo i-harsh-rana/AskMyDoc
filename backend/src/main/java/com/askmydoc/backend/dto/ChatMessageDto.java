@@ -16,8 +16,7 @@ public class ChatMessageDto {
     private Long chatId;
     private MessageRole role;
     private String question;
-    private String ragAnswer;
-    private String llmAnswer;
+    private String answer;
     private String llmProviderUsed;
     private LocalDateTime createdAt;
 }

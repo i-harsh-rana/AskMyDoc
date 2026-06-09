@@ -31,11 +31,8 @@ public class ChatMessage {
     @Column(name = "question", columnDefinition = "TEXT")
     private String question;
 
-    @Column(name = "rag_answer", columnDefinition = "TEXT")
-    private String ragAnswer;
-
-    @Column(name = "llm_answer", columnDefinition = "TEXT")
-    private String llmAnswer;
+    @Column(name = "answer", columnDefinition = "TEXT")
+    private String answer;
 
     @Column(name = "llm_provider_used", length = 100)
     private String llmProviderUsed;
