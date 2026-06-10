@@ -5,6 +5,7 @@ import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Profile from './pages/Profile'
+import Chat from './pages/Chat'
 
 function GuestOnly({ children }) {
   const { isAuthenticated } = useAuth()
@@ -29,6 +30,14 @@ export default function App() {
           <GuestOnly>
             <Signup />
           </GuestOnly>
+        }
+      />
+      <Route
+        path="/chat"
+        element={
+          <ProtectedRoute>
+            <Chat />
+          </ProtectedRoute>
         }
       />
       <Route

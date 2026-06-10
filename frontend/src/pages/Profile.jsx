@@ -199,8 +199,7 @@ export default function Profile() {
               </span>
               <h3 className="mt-4 font-semibold text-ink">No providers yet</h3>
               <p className="mt-1 max-w-sm text-sm text-muted">
-                Add OpenAI, Groq, Gemini, Mistral, or any custom model from the
-                GitHub Models Marketplace to get started.
+                Add any model from the GitHub Models Marketplace to get started.
               </p>
               <button
                 type="button"

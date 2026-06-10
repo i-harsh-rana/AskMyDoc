@@ -4,13 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Logo from './Logo'
 import { useAuth } from '../context/auth-context'
 
-const NAV_LINKS = [
-  { label: 'Features', href: '#features' },
-  { label: 'How it works', href: '#how-it-works' },
-  { label: 'AI Models', href: '#models' },
-  { label: 'Pricing', href: '#pricing' },
-]
-
 export default function Header() {
   const { isAuthenticated, user, logout } = useAuth()
   const [scrolled, setScrolled] = useState(false)
@@ -37,19 +30,6 @@ export default function Header() {
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
         <Logo />
 
-        <ul className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="text-sm font-medium text-muted transition-colors hover:text-ink"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
         <div className="hidden items-center gap-3 md:flex">
           {isAuthenticated ? (
             <>
@@ -58,6 +38,12 @@ export default function Header() {
                 className="text-sm font-medium text-muted transition-colors hover:text-brand-600"
               >
                 Hi, {user?.name?.split(' ')[0] || 'there'}
+              </Link>
+              <Link
+                to="/chat"
+                className="rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:-translate-y-0.5 hover:bg-brand-700"
+              >
+                Open chat
               </Link>
               <button
                 type="button"
@@ -121,20 +107,16 @@ export default function Header() {
             className="overflow-hidden border-t border-slate-200/70 bg-white/95 backdrop-blur-lg md:hidden"
           >
             <ul className="flex flex-col gap-1 px-5 py-4">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="block rounded-lg px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-slate-50 hover:text-ink"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-              <li className="mt-2 flex flex-col gap-2">
+              <li className="flex flex-col gap-2">
                 {isAuthenticated ? (
                   <>
+                    <Link
+                      to="/chat"
+                      onClick={() => setMenuOpen(false)}
+                      className="rounded-full bg-brand-600 px-5 py-2.5 text-center text-sm font-semibold text-white"
+                    >
+                      Open chat
+                    </Link>
                     <Link
                       to="/profile"
                       onClick={() => setMenuOpen(false)}

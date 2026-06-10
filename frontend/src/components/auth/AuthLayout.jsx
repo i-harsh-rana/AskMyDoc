@@ -4,7 +4,7 @@ import Logo from '../Logo'
 
 const HIGHLIGHTS = [
   'Upload PDFs, docs & notes — chat with them instantly',
-  'Choose OpenAI, Groq, Gemini, Mistral, or bring your own',
+  'Pick any model from the GitHub Models Marketplace',
   'Accurate, source-grounded answers in seconds',
 ]
 

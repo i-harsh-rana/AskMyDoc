@@ -46,6 +46,32 @@ export const authApi = {
   getProfile: () => client.get('/users/profile').then((r) => r.data),
 }
 
+export const chatApi = {
+  create: (file) => {
+    const form = new FormData()
+    form.append('file', file)
+    return client
+      .post('/chat/createChat', form, {
+        headers: { 'Content-Type': undefined },
+      })
+      .then((r) => r.data)
+  },
+
+  listChats: () => client.get('/chat').then((r) => r.data),
+
+  getChat: (chatId) => client.get(`/chat/${chatId}`).then((r) => r.data),
+
+  getMessages: (chatId) =>
+    client.get(`/chat/${chatId}/messages`).then((r) => r.data),
+
+  sendMessage: (chatId, { question, llmProviderId, llmEnabled }) =>
+    client
+      .post(`/chat/${chatId}/message`, { question, llmProviderId, llmEnabled })
+      .then((r) => r.data),
+
+  remove: (chatId) => client.delete(`/chat/${chatId}`).then((r) => r.data),
+}
+
 export const llmApi = {
   list: (userId) =>
     client.get(`/llm-provider/user/${userId}`).then((r) => r.data),

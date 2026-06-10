@@ -13,7 +13,7 @@ const item = {
   show: { y: 0, opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } },
 }
 
-const PROVIDERS = ['OpenAI', 'Groq', 'Gemini', 'Mistral']
+const PROVIDERS = ['GPT-4o', 'Llama 3', 'Phi-3', 'Mistral', 'DeepSeek']
 
 export default function Hero() {
   return (
@@ -72,10 +72,10 @@ export default function Hero() {
           className="mt-9 flex flex-col items-center gap-3 sm:flex-row"
         >
           <Link
-            to="/signup"
+            to="/chat"
             className="group inline-flex items-center gap-2 rounded-full bg-brand-600 px-7 py-3.5 text-sm font-semibold text-white shadow-xl shadow-brand-500/30 transition-all hover:-translate-y-0.5 hover:bg-brand-700"
           >
-            Start for free
+            Try AskMyDoc
             <svg
               width="18"
               height="18"
@@ -92,17 +92,11 @@ export default function Hero() {
               />
             </svg>
           </Link>
-          <a
-            href="#how-it-works"
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-all hover:border-brand-300 hover:text-brand-700"
-          >
-            See how it works
-          </a>
         </motion.div>
 
         <motion.div variants={item} className="mt-14 w-full">
           <p className="text-xs font-medium uppercase tracking-wider text-muted/70">
-            Works with leading AI providers
+            Powered by the GitHub Models Marketplace
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
             {PROVIDERS.map((name) => (
@@ -114,7 +108,7 @@ export default function Hero() {
               </span>
             ))}
             <span className="rounded-full border border-dashed border-slate-300 px-3 py-1 text-xs font-medium text-slate-400">
-              + bring your own
+              + more models
             </span>
           </div>
         </motion.div>

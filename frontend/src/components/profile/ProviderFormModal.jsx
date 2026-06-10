@@ -5,11 +5,10 @@ import SubmitButton from '../auth/SubmitButton'
 import ErrorAlert from '../auth/ErrorAlert'
 
 const PRESETS = [
-  { providerName: 'openai', displayName: 'OpenAI', baseUrl: 'https://api.openai.com/v1' },
-  { providerName: 'groq', displayName: 'Groq', baseUrl: 'https://api.groq.com/openai/v1' },
-  { providerName: 'gemini', displayName: 'Gemini', baseUrl: 'https://generativelanguage.googleapis.com/v1beta' },
-  { providerName: 'mistral', displayName: 'Mistral', baseUrl: 'https://api.mistral.ai/v1' },
-  { providerName: 'github', displayName: 'GitHub Models', baseUrl: 'https://models.inference.ai.azure.com' },
+  { providerName: 'gpt-4o', displayName: 'GPT-4o', baseUrl: 'https://models.inference.ai.azure.com' },
+  { providerName: 'gpt-4o-mini', displayName: 'GPT-4o mini', baseUrl: 'https://models.inference.ai.azure.com' },
+  { providerName: 'Meta-Llama-3.1-70B-Instruct', displayName: 'Llama 3.1 70B', baseUrl: 'https://models.inference.ai.azure.com' },
+  { providerName: 'Mistral-large', displayName: 'Mistral Large', baseUrl: 'https://models.inference.ai.azure.com' },
 ]
 
 function ProviderForm({ provider, onClose, onSubmit }) {
@@ -114,21 +113,21 @@ function ProviderForm({ provider, onClose, onSubmit }) {
           name="displayName"
           value={form.displayName}
           onChange={handleChange}
-          placeholder="My OpenAI key"
+          placeholder="My GitHub Models key"
         />
         <FormField
-          label="Provider name"
+          label="Model name"
           name="providerName"
           value={form.providerName}
           onChange={handleChange}
-          placeholder="openai"
+          placeholder="gpt-4o"
         />
         <FormField
           label="Base URL"
           name="baseUrl"
           value={form.baseUrl}
           onChange={handleChange}
-          placeholder="https://api.openai.com/v1"
+          placeholder="https://models.inference.ai.azure.com"
         />
         <FormField
           label={isEdit ? 'API token (leave blank to keep current)' : 'API token'}
@@ -136,7 +135,7 @@ function ProviderForm({ provider, onClose, onSubmit }) {
           type="password"
           value={form.bearerToken}
           onChange={handleChange}
-          placeholder="sk-..."
+          placeholder="ghp_..."
           autoComplete="off"
           required={!isEdit}
         />
