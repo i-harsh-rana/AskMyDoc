@@ -28,14 +28,14 @@ It also supports **bring‑your‑own LLM**: each user can register their own Op
 
 ## Features
 
-- 📄 **PDF upload & ingestion** — drag‑and‑drop a PDF; text is extracted with Apache PDFBox.
-- ⚡ **Asynchronous processing** — ingestion runs off‑request via **Apache Kafka**, so uploads return immediately and the document status moves `PENDING → PROCESSING → READY/FAILED`.
-- 🔍 **Semantic search** — chunks are embedded locally (Spring AI Transformers) and stored in **ChromaDB**; queries retrieve the top‑K most relevant chunks (cosine similarity).
-- 💬 **Grounded chat** — answers are generated from retrieved context plus the last 10 messages of conversation history.
-- 🏷️ **Auto‑generated chat titles** — the first question yields a short descriptive title via the LLM.
-- 🔑 **Bring your own LLM** — register multiple OpenAI‑compatible providers per user; bearer tokens are **AES‑encrypted** at rest. Toggle, edit, or delete providers from your profile.
-- 🔐 **JWT authentication** — stateless auth with BCrypt‑hashed passwords.
-- 🎨 **Modern SPA** — React 19 + Vite + Tailwind CSS 4 with Framer Motion animations and Markdown‑rendered answers.
+- **PDF upload & ingestion** — drag‑and‑drop a PDF; text is extracted with Apache PDFBox.
+- **Asynchronous processing** — ingestion runs off‑request via **Apache Kafka**, so uploads return immediately and the document status moves `PENDING → PROCESSING → READY/FAILED`.
+- **Semantic search** — chunks are embedded locally (Spring AI Transformers) and stored in **ChromaDB**; queries retrieve the top‑K most relevant chunks (cosine similarity).
+- **Grounded chat** — answers are generated from retrieved context plus the last 10 messages of conversation history.
+- **Auto‑generated chat titles** — the first question yields a short descriptive title via the LLM.
+- **Bring your own LLM** — register multiple OpenAI‑compatible providers per user; bearer tokens are **AES‑encrypted** at rest. Toggle, edit, or delete providers from your profile.
+- **JWT authentication** — stateless auth with BCrypt‑hashed passwords.
+- **Modern SPA** — React 19 + Vite + Tailwind CSS 4 with Framer Motion animations and Markdown‑rendered answers.
 
 ---
 
