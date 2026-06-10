@@ -116,24 +116,25 @@ The producer (`KafkaProducer`) emits a `PdfIngestionEvent` on upload; the `Kafka
 
 ## Screenshots
 
-> ℹ️ The images below live in [`docs/screenshots/`](docs/screenshots/). Placeholders are committed so the layout renders; run the app and drop your own captures in with the same filenames to populate them. (Live screenshots weren't captured automatically because they require MySQL, Kafka, ChromaDB, and an LLM key all running together — see [Getting Started](#getting-started).)
+### Landing
 
-| Landing | Chat |
-|---------|------|
-| ![Landing page](docs/screenshots/landing.png) | ![Chat with a PDF](docs/screenshots/chat.png) |
+![Landing page](screenshot-landing.png)
 
-| Upload / Dropzone | Profile & LLM Providers |
-|-------------------|--------------------------|
-| ![PDF upload](docs/screenshots/upload.png) | ![Profile and providers](docs/screenshots/profile.png) |
+### Chat — Upload a PDF
 
-**Suggested captures**
+The chat workspace with the chat history sidebar and the PDF dropzone.
 
-| Filename | Page | What to show |
-|----------|------|--------------|
-| `landing.png` | `/` | Hero / landing page |
-| `upload.png` | `/chat` | Empty state with the PDF dropzone |
-| `chat.png` | `/chat` | A conversation: user questions + Markdown answers with the provider badge |
-| `profile.png` | `/profile` | User profile and the LLM provider cards/modal |
+![Chat with a PDF](screenshot-chat.png)
+
+### Profile & LLM Providers
+
+Manage your account and bring-your-own OpenAI-compatible providers (encrypted tokens, toggle active/inactive).
+
+![Profile and providers](screenshot-profile.png)
+
+### Sign Up
+
+![Create an account](screenshot-signup.png)
 
 ---
 
