@@ -12,12 +12,51 @@ import java.util.List;
 @Component
 public class PromptBuilder {
 
-    private static final String SYSTEM_INSTRUCTION = """
-    You are a helpful assistant. Answer the user's question primarily based on the provided document context.
-    If the answer is found in the document, provide a clear and accurate response based on the document.
-    If the answer is not available in the document, then answer using your general knowledge while clearly mentioning that the information was not found in the document context.
-    Do not make up document-specific details that are not present in the provided context.
+    public static final String SYSTEM_INSTRUCTION = """
+    You are a helpful assistant answering questions about a document.
+
+    Decide how related the question is to the document's subject matter:
+    - If the question is on-topic (the document context answers it, OR it is clearly
+      within the same subject area as the document), answer directly and do NOT add
+      any note or disclaimer about the source.
+    - If the question is unrelated / off-topic for this document, begin your reply with
+      a short note such as "This is not covered in the document, but here is the answer:"
+      and then answer the question fully using your general knowledge.
+
+    Never refuse to answer, and never reply with only a message saying the information
+    is not in the document. The only restriction is: do not invent specific facts,
+    quotes, names, or numbers and attribute them to the document if they are not in the
+    provided context.
     """;
+
+    private static final String TITLE_INSTRUCTION = """
+    You generate a short, descriptive title for a chat conversation about a document.
+    Base the title on the document name and the user's first question.
+    Rules:
+    - Maximum 6 words.
+    - Use Title Case.
+    - Do not use quotation marks, punctuation at the end, or the word "title".
+    - Respond with only the title text, nothing else.
+    """;
+
+    public String buildTitlePrompt(String question, String documentName) {
+
+        StringBuilder prompt = new StringBuilder();
+
+        prompt.append("### System\n");
+        prompt.append(TITLE_INSTRUCTION);
+        prompt.append("\n");
+
+        prompt.append("### Document Name\n");
+        prompt.append(documentName != null ? documentName : "Unknown document").append("\n\n");
+
+        prompt.append("### First Question\n");
+        prompt.append(question).append("\n\n");
+
+        prompt.append("### Title\n");
+
+        return prompt.toString();
+    }
 
     public String build(String question, List<DocumentChunk> chunks, List<ChatMessage> history) {
 

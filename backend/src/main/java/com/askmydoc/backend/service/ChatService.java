@@ -71,6 +71,7 @@ public class ChatService {
         try {
             Chat chat = new Chat();
             chat.setUser(user);
+            chat.setTitle(originalName);
             chatRepository.save(chat);
 
             Document document = new Document();
@@ -106,6 +107,8 @@ public class ChatService {
         Document document = documentRepository.findByChatId(chatId)
                 .orElseThrow(() -> new EntityNotFoundException("Document not found for this chat"));
 
+        boolean isFirstMessage = chatMessageRepository.countByChatId(chatId) == 0;
+
         ChatMessage userMessage = new ChatMessage();
         userMessage.setChat(chat);
         userMessage.setRole(ChatMessage.MessageRole.USER);
@@ -138,7 +141,32 @@ public class ChatService {
         assistantMessage.setLlmProviderUsed(llmProviderUsed);
         chatMessageRepository.save(assistantMessage);
 
-        return new AnswerResponseDto(answer, llmProviderUsed);
+        String chatTitle = null;
+        if (isFirstMessage) {
+            chatTitle = generateChatTitle(chat, question, document.getOriginalName());
+        }
+
+        return new AnswerResponseDto(answer, llmProviderUsed, chatTitle);
+    }
+
+    private String generateChatTitle(Chat chat, String question, String documentName) {
+        try {
+            String titlePrompt = promptBuilder.buildTitlePrompt(question, documentName);
+            String generatedTitle = chatClient.prompt().user(titlePrompt).call().content();
+            if (generatedTitle != null) {
+                generatedTitle = generatedTitle.trim().replaceAll("^[\"']|[\"']$", "");
+                if (generatedTitle.length() > 255) {
+                    generatedTitle = generatedTitle.substring(0, 255);
+                }
+                if (!generatedTitle.isBlank()) {
+                    chat.setTitle(generatedTitle);
+                    chatRepository.save(chat);
+                    return generatedTitle;
+                }
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     public List<ChatMessageDto> getMessages(Long chatId, String email) {

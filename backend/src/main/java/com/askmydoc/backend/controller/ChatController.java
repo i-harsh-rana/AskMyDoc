@@ -43,4 +43,25 @@ public class ChatController {
         return ResponseEntity.ok(messages);
     }
 
+    @GetMapping("/{chatId}")
+    public ResponseEntity<ChatDto> getChat(@PathVariable Long chatId, @AuthenticationPrincipal UserDetails userDetails) {
+
+        ChatDto chat = chatService.getChat(chatId, userDetails.getUsername());
+        return ResponseEntity.ok(chat);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ChatDto>> getChats(@AuthenticationPrincipal UserDetails userDetails) {
+
+        List<ChatDto> chats = chatService.getChats(userDetails.getUsername());
+        return ResponseEntity.ok(chats);
+    }
+
+    @DeleteMapping("/{chatId}")
+    public ResponseEntity<Void> deleteChat(@PathVariable Long chatId, @AuthenticationPrincipal UserDetails userDetails) {
+
+        chatService.deleteChat(chatId, userDetails.getUsername());
+        return ResponseEntity.noContent().build();
+    }
+
 }

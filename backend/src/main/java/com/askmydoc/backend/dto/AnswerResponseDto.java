@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class AnswerResponseDto {
     private String answer;
     private String llmProviderUsed;
+    private String chatTitle;
 }

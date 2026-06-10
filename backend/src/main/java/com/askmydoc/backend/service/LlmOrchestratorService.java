@@ -3,6 +3,7 @@ package com.askmydoc.backend.service;
 import com.askmydoc.backend.model.LlmProvider;
 import com.askmydoc.backend.repository.LlmProviderRepository;
 import com.askmydoc.backend.security.EncryptionConfig;
+import com.askmydoc.backend.utils.PromptBuilder;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -41,10 +42,7 @@ public class LlmOrchestratorService {
         Map<String, Object> requestBody = Map.of(
                 "model", provider.getProviderName(),
                 "messages", List.of(
-                        Map.of("role", "system", "content",
-                                "You are a helpful assistant. Answer the user's question based " +
-                                        "on the provided document context." +
-                                        "and if required also all you PDF says this, but according to me - your answer (only if required)"),
+                        Map.of("role", "system", "content", PromptBuilder.SYSTEM_INSTRUCTION),
                         Map.of("role", "user", "content", prompt)
                 ),
                 "max_tokens", 1000

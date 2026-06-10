@@ -13,5 +13,7 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
 
     List<ChatMessage> findTop10ByChatIdOrderByCreatedAtDesc(Long chatId);
 
+    long countByChatId(Long chatId);
+
     void deleteByChatId(Long chatId);
 }
